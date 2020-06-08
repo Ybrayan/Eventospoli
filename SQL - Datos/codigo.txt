@@ -1,0 +1,103 @@
+CREATE DATABASE eventospoli;
+
+CREATE TABLE categoria(
+    id_categoria TINYINT(10) PRIMARY KEY AUTO_INCREMENT,
+    cat_evento VARCHAR(50) NOT NULL,
+    icono VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE eventos(
+    evento_id TINYINT(10) PRIMARY KEY AUTO_INCREMENT,
+    nombre_evento VARCHAR(60) NOT NULL,
+    fecha_evento date,
+    hora_evento TIME NOT NULL,
+    clave VARCHAR(10)
+);
+
+CREATE TABLE invitados(
+    invitado_id TINYINT(4) PRIMARY KEY AUTO_INCREMENT,
+    nombre_invitado VARCHAR(30) NOT NULL,
+    apellido_invitado VARCHAR(30) NOT NULL,
+    descripcion TEXT(600) NOT NULL,
+    url_imagen VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE eventos ADD id_cat_evento TINYINT(10) NOT NULL AFTER hora_evento;
+ALTER TABLE eventos ADD FOREIGN KEY (id_cat_evento) REFERENCES categoria(id_categoria);
+
+ALTER TABLE eventos ADD id_inv TINYINT(4) NOT NULL AFTER id_cat_evento;
+ALTER TABLE eventos ADD FOREIGN KEY (id_inv) REFERENCES invitados(invitado_id);
+
+CREATE TABLE registrados(
+    id_registrado BIGINT(20) PRIMARY KEY AUTO_INCREMENT,
+    nombre_registrado VARCHAR(50) NOT NULL,
+    apellido_registrado VARCHAR(50) NOT NULL,
+    email_registrado VARCHAR(100) NOT NULL,
+    fecha_registrado DATETIME NOT NULL,
+    pases_articulos LONGTEXT NOT NULL,
+    talleres_registrados LONGTEXT NOT NULL,
+    regalo INT(11) NOT NULL,
+    total_pagado VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE regalos(
+    id_regalo INT(11) PRIMARY KEY AUTO_INCREMENT,
+    nombre_regalo VARCHAR(50) NOT NULL
+);
+
+ALTER TABLE registrados ADD FOREIGN KEY (regalo) REFERENCES regalos(id_regalo);
+
+INSERT INTO regalos(`nombre_regalo`) VALUES ('Pulseras');
+INSERT INTO regalos(`nombre_regalo`) VALUES ('Etiquetas');
+INSERT INTO regalos(`nombre_regalo`) VALUES ('Plumas');
+
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Rafael', 'Bautista', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado1.jpg');
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Shari', 'Herrera', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado2.jpg');
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Gregorio', 'Sanchez', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado3.jpg');
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Susana', 'Rivera', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado4.jpg');
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Harold', 'Garcia', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado5.jpg');
+INSERT INTO invitados(`nombre_invitado`, `apellido_invitado`, `descripcion`, `url_imagen`) VALUES ('Susan', 'Sanchez', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates delectus odit architecto aspernatur incidunt voluptatum labore porro qui. Animi rem obcaecati aut sequi aliquam praesentium voluptatum.', 'invitado6.jpg');
+
+
+INSERT INTO categoria(`cat_evento`, `icono`) VALUES ('Seminarios', 'fas fa-university');
+INSERT INTO categoria(`cat_evento`, `icono`) VALUES ('Conferencias', 'far fa-comments');
+INSERT INTO categoria(`cat_evento`, `icono`) VALUES ('Talleres', 'fas fa-code');
+
+
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Responsive Web Design', '2020-12-04', '10:00:00', '3', '1', 'taller_01');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Flexbox', '2020-12-04', '12:00:00', '3', '2', 'taller_02');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('HTML5 y CSS3', '2020-12-04', '14:00:00', '3', '3', 'taller_03');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Drupal', '2020-12-04', '17:00:00', '3', '4', 'taller_04');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('WordPress', '2020-12-04', '19:00:00', '3', '5', 'taller_05');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Como ser freelancer', '2020-12-04', '10:00:00', '2', '6', 'conf_01');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Tecnologías del Futuro', '2020-12-04', '17:00:00', '2', '1', 'conf_02');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Seguridad en la Web', '2020-12-04', '19:00:00', '2', '2', 'conf_03');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Diseño UI y UX para móviles', '2020-12-04', '10:00:00', '1', '6', 'sem_01');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('AngularJS', '2020-12-05', '10:00:00', '3', '1', 'taller_06');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('PHP y MySQL', '2020-12-05', '12:00:00', '3', '2', 'taller_07');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('JavaScript Avanzado', '2020-12-05', '14:00:00', '3', '3', 'taller_08');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('SEO en Google', '2020-12-05', '17:00:00', '3', '4', 'taller_09');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('De Photoshop a HTML5 y CSS3', '2020-12-05', '19:00:00', '3', '5', 'taller_10');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('PHP Intermedio y Avanzado', '2020-12-05', '21:00:00', '3', '6', 'taller_11');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Como crear una tienda online que venda millones en pocos días', '2020-12-05', '10:00:00', '2', '6', 'conf_04');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Los mejores lugares para encontrar trabajo', '2020-12-05', '17:00:00', '2', '1', 'conf_05');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Pasos para crear un negocio rentable ', '2020-12-05', '19:00:00', '2', '2', 'conf_06');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Aprende a Programar en una mañana', '2020-12-05', '10:00:00', '1', '3', 'sem_02');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Diseño UI y UX para móviles', '2020-12-05', '17:00:00', '1', '5', 'sem_03');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Laravel', '2020-12-06', '10:00:00', '3', '1', 'taller_12');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Crea tu propia API', '2020-12-06', '12:00:00', '3', '2', 'taller_13');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('JavaScript y jQuery', '2020-12-06', '14:00:00', '3', '3', 'taller_14');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Creando Plantillas para WordPress', '2020-12-06', '17:00:00', '3', '4', 'taller_15');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Tiendas Virtuales en Magento', '2020-12-06', '19:00:00', '3', '5', 'taller_16');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Como hacer Marketing en línea', '2020-12-06', '10:00:00', '2', '6', 'conf_07');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('¿Con que lenguaje debo empezar?', '2020-12-06', '17:00:00', '2', '2', 'conf_08');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Frameworks y librerias Open Source', '2020-12-06', '19:00:00', '2', '3', 'conf_09');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Creando una App en Android en una mañana', '2020-12-06', '10:00:00', '1', '4', 'sem_04');
+INSERT INTO eventos (`nombre_evento`, `fecha_evento`, `hora_evento`, `id_cat_evento`, `id_inv`, `clave`) VALUES ('Creando una App en iOS en una tarde', '2020-12-06', '17:00:00', '1', '1', 'sem_05');
+
+
+CREATE TABLE usuarios(
+    id INT(11) PRIMARY KEY AUTO_INCREMENT,
+    usuario VARCHAR(50) NOT NULL,
+    password VARCHAR(60) NOT NULL
+);

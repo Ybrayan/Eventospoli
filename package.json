@@ -1,0 +1,22 @@
+{
+  "name": "proyecto",
+  "version": "1.0.0",
+  "description": "Proyecto de final de semestre",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ybrayan/PROYECTO-TP2.git"
+  },
+  "author": "Yhors Brayan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ybrayan/PROYECTO-TP2/issues"
+  },
+  "homepage": "https://github.com/Ybrayan/PROYECTO-TP2#readme"
+}
