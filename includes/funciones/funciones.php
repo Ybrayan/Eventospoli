@@ -46,7 +46,7 @@
     function obtenerInvitados() {
         include 'bd_conexion.php';
         try {
-            return $conn->query('SELECT invitado_id, nombre_invitado FROM invitados');
+            return $conn->query('SELECT invitado_id, nombre_invitado, apellido_invitado FROM invitados');
         } catch(Exception $e) {
             //Se desactiva, puede causar inyeccion de codigo y mostrar fallos
             //echo "Error! : " . $e->getMessage();
@@ -58,7 +58,7 @@
     function obtenerNombreInvitado($id = null) {
         include 'bd_conexion.php';
         try {
-            return $conn->query("SELECT  nombre_invitado FROM invitados WHERE invitado_id = {$id}");
+            return $conn->query("SELECT  nombre_invitado, apellido_invitado FROM invitados WHERE invitado_id = {$id}");
         } catch(Exception $e) {
             //Se desactiva, puede causar inyeccion de codigo y mostrar fallos
             //echo "Error! : " . $e->getMessage();

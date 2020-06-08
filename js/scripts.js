@@ -39,7 +39,6 @@ function eventListeners() {
 
 function agregarEvento(e) {
   e.preventDefault();
-  console.log("ssss");
 
   var nombre = document.querySelector(".nombre-evento").value;
   var fecha = document.querySelector(".fecha-evento").value;
@@ -56,7 +55,6 @@ function agregarEvento(e) {
     });
   } else {
     // la tarea tiene algo, insertar en PHP
-    console.log("WWWWWWW");
 
     console.log(
       `${nombre}  ${fecha} ${hora} ${categoria} ${
