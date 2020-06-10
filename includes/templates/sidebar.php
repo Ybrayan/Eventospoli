@@ -1,6 +1,6 @@
 <aside class="contenedor-proyectos">
     <div class="panel crear-proyecto">
-        <a href="#" class="boton">Nuevo Invitado <i class="fas fa-plus"></i> </a>
+        <a href="ingresarInvitados.php" class="boton">Nuevo Invitado <i class="fas fa-plus"></i> </a>
     </div>
 
     <div class="panel lista-proyectos">

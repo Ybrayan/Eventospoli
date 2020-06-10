@@ -1,19 +1,15 @@
 eventListeners();
 // lista de proyectos
-var listaProyectos = document.querySelector('ul#proyectos');
+var listaProyectos = document.querySelector("ul#proyectos");
 
 function eventListeners() {
-
-
   // Validacion de campos
   var nombre = document.getElementById("nombre-evento");
 
   // Validacion de capacidad de campos
   nombre.addEventListener("input", function () {
-    if (this.value.length > 20) this.value = this.value.slice(0, 20);
+    if (this.value.length > 30) this.value = this.value.slice(0, 30);
   });
-
-
 
   if (document.querySelector(".nuevo-evento") !== null) {
     document
@@ -25,15 +21,106 @@ function eventListeners() {
     document
       .querySelector(".nuevo-invitado")
       .addEventListener("click", agregarInvitado);
+    console.log("eee");
   }
 
   // Botones para las acciones de las tareas
   document
     .querySelector(".listado-pendientes")
     .addEventListener("click", accionesTareas);
+
+  document
+    .querySelector(".listado-invitados")
+    .addEventListener("click", accionesInvitados);
+}
+
+function solo_texto(inputtxt) {
+  var patt = new RegExp(/^[A-Za-z _]*[A-Za-z][A-Za-z _]*$/);
+  var res = patt.test(inputtxt);
+  if (res) {
+    console.log("Cumple Regex");
+    return true;
+  } else {
+    console.log("Fallo Regex");
+    alert("message");
+    return false;
+  }
 }
 
 // Agregar invitado
+function agregarInvitado(e) {
+  console.log("entro");
+  e.preventDefault();
+
+  var nombre = document.querySelector(".nombre-invitado").value;
+  var apellido = document.querySelector(".apellido-invitado").value;
+  var descripcion =
+    "Praesent massa ipsum, porta ut aliquam ac, pretium eget felis. Praesent eleifend dolor eget sollicitudin pellentesque. Fusce arcu enim, molestie id accumsan a, fringilla a magna. Nullam consequat congue felis, nec convallis dui congue et. Nulla efficitur bibendum metus a fermentum. Sed id bibendum massa. Quisque purus magna, mattis a hendrerit a, pretium et ex. Mauris quis ex at arcu dictum fringilla at nec purus. Nam non facilisis risus, eu luctus neque. Vivamus id placerat nibh, vitae pellentesque ante. Vestibulum malesuada nisl consequat, gravida nisl ut, iaculis ipsum. Vestibulum suscipit, dui in aliquet tempus, felis risus sagittis ex, vitae porta arcu purus eu neque. Cras posuere augue neque, quis laoreet leo vulputate a. Pellentesque aliquam ex vitae augue laoreet viverra. Nullam volutpat elit non diam gravida vulputate. Mauris ornare feugiat leo eget tristique.";
+  var url_imagen = "invitado.jpg";
+
+  // Validar que el campo tenga algo escrito
+
+  if (nombre === "" || apellido === "") {
+    swal({
+      title: "Error",
+      text: "Todos los campos son OBLIGATORIOS",
+      type: "error",
+    });
+  } else {
+    if (solo_texto(nombre) && solo_texto(apellido)) {
+      console.log("paso");
+
+      // crear formdata
+      var datos = new FormData();
+      datos.append("nombre_invitado", nombre);
+      datos.append("apellido_invitado", apellido);
+      datos.append("descripcion", descripcion);
+      datos.append("url_imagen", url_imagen);
+      datos.append("accion", "crear");
+
+      // crear llamado a ajax
+      var xhr = new XMLHttpRequest();
+
+      // Abrir la conexion
+      xhr.open("POST", "includes/modelos/modelo-invitado.php", true);
+
+      // ejecutarlo y respuesta
+      xhr.onload = function () {
+        if (this.status === 200) {
+          // todo correcto
+          var respuesta = JSON.parse(xhr.responseText);
+          // asignar valores
+
+          var resultado = respuesta.respuesta,
+            tipo = respuesta.tipo;
+
+          if (resultado === "correcto") {
+            // se agregó correctamente
+            if (tipo === "crear") {
+              // lanzar la alerta
+              swal({
+                type: "success",
+                title: "Invitado Agregado",
+                text: "El Invitado: " + nombre + " se registro correctamente",
+              });
+            }
+          } else {
+            // hubo un error
+            swal({
+              type: "error",
+              title: "Error!",
+              text: "Hubo un error",
+            });
+          }
+        }
+      };
+      // Enviar la consulta
+      xhr.send(datos);
+    } else {
+      console.log("no paso");
+    }
+  }
+}
 
 // Agregar evento
 
@@ -54,7 +141,9 @@ function agregarEvento(e) {
       type: "error",
     });
   } else {
-    // la tarea tiene algo, insertar en PHP
+    if (solo_texto(nombre)) {
+      console.log("si paso la pruevasrrrr");
+    }
 
     console.log(
       `${nombre}  ${fecha} ${hora} ${categoria} ${
@@ -93,7 +182,7 @@ function agregarEvento(e) {
             // lanzar la alerta
             swal({
               type: "success",
-              title: "Tarea Creada",
+              title: "Evento Creado",
               text: "El Evento: " + nombre + " se creó correctamente",
             });
           }
@@ -116,7 +205,7 @@ function agregarEvento(e) {
 
 function accionesTareas(e) {
   console.log("elimina");
-  
+
   e.preventDefault();
 
   if (e.target.classList.contains("fa-trash")) {

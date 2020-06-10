@@ -1,8 +1,6 @@
 <?php
 
 $accion = $_POST['accion'];
-$proyecto = $_POST['proyecto'];
-
 $nombre_invitado= $_POST['nombre_invitado'];
 $apellido_invitado= $_POST['apellido_invitado'];
 $descripcion= $_POST['descripcion'];
@@ -14,15 +12,15 @@ if($accion === 'crear') {
     
     try {
         // Realizar la consulta a la base de datos
-        $stmt = $conn->prepare("INSERT INTO invitados (nombre_invitado) VALUES (?) ");
-        $stmt->bind_param('s', $proyecto);
+        
+        $stmt = $conn->prepare("INSERT INTO invitados (nombre_invitado, apellido_invitado, descripcion, url_imagen) VALUES (?,?,?,?)");
+        $stmt->bind_param('ssss', $nombre_invitado,$apellido_invitado,$descripcion,$url_imagen);
         $stmt->execute();
         if($stmt->affected_rows > 0) {
             $respuesta = array(
                 'respuesta' => 'correcto',
-                'id_insertado' => $stmt->insert_id,
                 'tipo' => $accion,
-                'nombre_proyecto' => $proyecto
+                'nombre_invitado' => $nombre_invitado
             );
         }  else {
             $respuesta = array(
@@ -33,9 +31,11 @@ if($accion === 'crear') {
         $conn->close();
     } catch(Exception $e) {
         // En caso de un error, tomar la exepcion
+        /*
         $respuesta = array(
             'error' => $e->getMessage()
         );
+        */
     }
     
     echo json_encode($respuesta);

@@ -31,7 +31,7 @@
         <form action="#" class="agregar-evento" id="prueba" method="POST">
             <div class="campo">
                 <label for="nombre">Nombre Evento:</label>
-                <input required type="text" placeholder="Nombre Evento" class="nombre-evento" id="nombre-evento" name="nombre-evento" maxlength="20" pattern="[A-Za-z0-9]{1,20}">
+                <input required type="text" placeholder="Nombre Evento" class="nombre-evento" id="nombre-evento" name="nombre-evento" maxlength="30" pattern="[A-Za-z0-9]{1,30}">
             </div>
 
             <div class="campo">

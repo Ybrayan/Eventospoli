@@ -179,7 +179,8 @@ body.index {
 .contenido-principal h1 span {
     font-weight: 400;
 }
-.agregar-evento {
+.agregar-evento,
+.agregar-invitado {
     max-width: 800px;
     width: 90%;
     background-color: #607D8B;
@@ -189,8 +190,28 @@ body.index {
     transition: background-color .5s ease-in-out;
 }
 
+/** Listado Invitados **/
+.listado-invitados ul {
+    padding: 0;
+    list-style: none;
+}
+.listado-invitados ul li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.4rem;
+    border-bottom: 1px solid #d1d1d1;
+}
+.listado-invitados ul li:last-of-type {
+    border-bottom: none;
+}
+.listado-invitados ul li i {
+    cursor: pointer;
+}
+
 /** Listado Pendientes **/
-.listado-pendientes {
+.listado-pendientes,
+.listado-invitados {
     background-color: #F2F2F2;
     max-width: 800px;
     width: 90%;
