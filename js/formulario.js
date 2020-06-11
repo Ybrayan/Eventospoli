@@ -17,6 +17,34 @@
 })();
 
 
+// Expresiones Regulares
+// Usuarion
+function usuario_texto(inputtxt) {
+  var patt = new RegExp(/^[A-Za-z_]{4,15}$/);
+  var res = patt.test(inputtxt);
+  if (res) {
+    console.log("Cumple Regex");
+    return true;
+  } else {
+    console.log("Fallo Regex");
+    alert("message");
+    return false;
+  }
+}
+
+// Pass
+function pass_texto(inputtxt) {
+  var patt = new RegExp(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{4,15})$/);
+  var res = patt.test(inputtxt);
+  if (res) {
+    console.log("Cumple Regex");
+    return true;
+  } else {
+    console.log("Fallo Regex");
+    alert("message");
+    return false;
+  }
+}
 
 
 

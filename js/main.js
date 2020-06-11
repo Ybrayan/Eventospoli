@@ -187,6 +187,34 @@
   }); //DOMContentLoaded
 })();
 
+// Expresiones Regulares
+// Usuarion
+function solo_texto(inputtxt) {
+  var patt = new RegExp(/^[A-Za-z _]*[A-Za-z][A-Za-z _]*$/);
+  var res = patt.test(inputtxt);
+  if (res) {
+    console.log("Cumple Regex Nombre y/o Apellido");
+    return true;
+  } else {
+    console.log("Fallo Regex");
+    alert("message");
+    return false;
+  }
+}
+// Email
+function solo_texto(inputtxt) {
+  var patt = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
+  var res = patt.test(inputtxt);
+  if (res) {
+    console.log("Cumple Regex Email");
+    return true;
+  } else {
+    console.log("Fallo Regex Email");
+    alert("message");
+    return false;
+  }
+}
+
 $(function () {
   //Lettering
   $(".nombre-sitio").lettering();

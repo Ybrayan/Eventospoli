@@ -34,6 +34,8 @@ function eventListeners() {
     .addEventListener("click", accionesInvitados);
 }
 
+
+// Expresiones Regulares
 function solo_texto(inputtxt) {
   var patt = new RegExp(/^[A-Za-z _]*[A-Za-z][A-Za-z _]*$/);
   var res = patt.test(inputtxt);
@@ -117,6 +119,11 @@ function agregarInvitado(e) {
       // Enviar la consulta
       xhr.send(datos);
     } else {
+      swal({
+        title: "Error",
+        text: "Los Nombres y/o Apellidos estan mal",
+        type: "error",
+      });
       console.log("no paso");
     }
   }
@@ -142,62 +149,61 @@ function agregarEvento(e) {
     });
   } else {
     if (solo_texto(nombre)) {
-      console.log("si paso la pruevasrrrr");
-    }
+      // crear formdata
+      var datos = new FormData();
+      datos.append("nombre_evento", nombre);
+      datos.append("fecha_evento", fecha);
+      datos.append("hora_evento", hora);
+      datos.append("id_cat_evento", categoria);
+      datos.append("id_inv", document.querySelector("#invitado_id").value);
+      datos.append("accion", "crear");
 
-    console.log(
-      `${nombre}  ${fecha} ${hora} ${categoria} ${
-        document.querySelector("#invitado_id").value
-      }`
-    );
+      // crear llamado a ajax
+      var xhr = new XMLHttpRequest();
 
-    // crear formdata
-    var datos = new FormData();
-    datos.append("nombre_evento", nombre);
-    datos.append("fecha_evento", fecha);
-    datos.append("hora_evento", hora);
-    datos.append("id_cat_evento", categoria);
-    datos.append("id_inv", document.querySelector("#invitado_id").value);
-    datos.append("accion", "crear");
+      // Abrir la conexion
+      xhr.open("POST", "includes/modelos/modelo-tareas.php", true);
 
-    // crear llamado a ajax
-    var xhr = new XMLHttpRequest();
+      // ejecutarlo y respuesta
+      xhr.onload = function () {
+        if (this.status === 200) {
+          // todo correcto
+          var respuesta = JSON.parse(xhr.responseText);
+          // asignar valores
 
-    // Abrir la conexion
-    xhr.open("POST", "includes/modelos/modelo-tareas.php", true);
+          var resultado = respuesta.respuesta,
+            tipo = respuesta.tipo;
 
-    // ejecutarlo y respuesta
-    xhr.onload = function () {
-      if (this.status === 200) {
-        // todo correcto
-        var respuesta = JSON.parse(xhr.responseText);
-        // asignar valores
-
-        var resultado = respuesta.respuesta,
-          tipo = respuesta.tipo;
-
-        if (resultado === "correcto") {
-          // se agregó correctamente
-          if (tipo === "crear") {
-            // lanzar la alerta
+          if (resultado === "correcto") {
+            // se agregó correctamente
+            if (tipo === "crear") {
+              // lanzar la alerta
+              swal({
+                type: "success",
+                title: "Evento Creado",
+                text: "El Evento: " + nombre + " se creó correctamente",
+              });
+            }
+          } else {
+            // hubo un error
             swal({
-              type: "success",
-              title: "Evento Creado",
-              text: "El Evento: " + nombre + " se creó correctamente",
+              type: "error",
+              title: "Error!",
+              text: "Hubo un error",
             });
           }
-        } else {
-          // hubo un error
-          swal({
-            type: "error",
-            title: "Error!",
-            text: "Hubo un error",
-          });
         }
-      }
-    };
-    // Enviar la consulta
-    xhr.send(datos);
+      };
+      // Enviar la consulta
+      xhr.send(datos);
+
+    } else {
+      swal({
+        title: "Error",
+        text: "El Nombre del Evento esta raro",
+        type: "error",
+      });
+    }
   }
 }
 
