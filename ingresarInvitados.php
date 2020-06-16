@@ -31,6 +31,7 @@
 
 
     <h2>Invitados Registrados</h2>
+
     <div class="listado-invitados">
         <ul>
             <?php
@@ -55,6 +56,7 @@
             ?>
         </ul>
     </div>
+    </main>
 </div>
 
 <?php

@@ -23,17 +23,21 @@ function eventListeners() {
       .addEventListener("click", agregarInvitado);
   }
 
-
-  // Botones para las acciones de las tareas
-  document
-    .querySelector(".listado-pendientes")
-    .addEventListener("click", accionesTareas);
-
-  document
-    .querySelector(".listado-invitados")
-    .addEventListener("click", accionesInvitados);
+  // Botones para las acciones 
+  // de los Invitados
+  if (document.querySelector(".listado-invitados") !== null) {
+    document
+      .querySelector(".listado-invitados")
+      .addEventListener("click", accionesInvitados);
+  }
+  
+  // de las Eventos
+  if (document.querySelector(".listado-pendientes") !== null) {
+    document
+      .querySelector(".listado-pendientes")
+      .addEventListener("click", accionesTareas);
+  } 
 }
-
 
 // Expresiones Regulares
 function solo_texto(inputtxt) {
@@ -58,7 +62,6 @@ function agregarInvitado(e) {
   var descripcion =
     "Praesent massa ipsum, porta ut aliquam ac, pretium eget felis. Praesent eleifend dolor eget sollicitudin pellentesque. Fusce arcu enim, molestie id accumsan a, fringilla a magna. Nullam consequat congue felis, nec convallis dui congue et. Nulla efficitur bibendum metus a fermentum. Sed id bibendum massa. Quisque purus magna, mattis a hendrerit a, pretium et ex. Mauris quis ex at arcu dictum fringilla at nec purus. Nam non facilisis risus, eu luctus neque. Vivamus id placerat nibh, vitae pellentesque ante. Vestibulum malesuada nisl consequat, gravida nisl ut, iaculis ipsum. Vestibulum suscipit, dui in aliquet tempus, felis risus sagittis ex, vitae porta arcu purus eu neque. Cras posuere augue neque, quis laoreet leo vulputate a. Pellentesque aliquam ex vitae augue laoreet viverra. Nullam volutpat elit non diam gravida vulputate. Mauris ornare feugiat leo eget tristique.";
   var url_imagen = "invitado.jpg";
-  
 
   // Validar que el campo tenga algo escrito
 
@@ -103,8 +106,9 @@ function agregarInvitado(e) {
               swal({
                 type: "success",
                 title: "Invitado Agregado",
-                text: "El Invitado: " + nombre + " se registro correctamente",
+                text: "El Invitado " + nombre + " se registro correctamente",
               });
+              location.reload(true);
             }
           } else {
             // hubo un error
@@ -196,7 +200,6 @@ function agregarEvento(e) {
       };
       // Enviar la consulta
       xhr.send(datos);
-
     } else {
       swal({
         title: "Error",
@@ -207,10 +210,75 @@ function agregarEvento(e) {
   }
 }
 
-// las elimina
+// Acciones en los Eventos
 
 function accionesTareas(e) {
   console.log("elimina");
+
+  e.preventDefault();
+
+  if (e.target.classList.contains("fa-trash")) {
+    swal({
+      title: "Seguro(a)?",
+      text: "Esta acción no se puede deshacer",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, borrar!",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.value) {
+        var eventoEliminar = e.target.parentElement.parentElement;
+        // Borrar de la BD
+        eliminarInvitadoBD(eventoEliminar);
+
+        // Borrar del HTML
+        eventoEliminar.remove();
+
+        swal("Eliminado!", "La tarea fue eliminada!.", "success");
+      }
+    });
+  }
+}
+
+// Elimina las tareas de la base de datos
+function eliminarInvitadoBD(evento) {
+  var idInvitado = evento.id.split(":");
+
+  // crear llamado ajax
+  var xhr = new XMLHttpRequest();
+  console.log(idInvitado);
+
+  // informacion
+  var datos = new FormData();
+  datos.append("id", idInvitado[1]);
+  datos.append("accion", "eliminar");
+
+  // abrir la conexion
+  xhr.open("POST", "includes/modelos/modelo-tareas.php", true);
+
+  // on load
+  xhr.onload = function () {
+    if (this.status === 200) {
+      //console.log(JSON.parse(xhr.responseText));
+
+      // Comprobar que haya Eventos restantes
+      var listaEventosRestantes = document.querySelectorAll("li.evento");
+      if (listaEventosRestantes.length === 0) {
+        document.querySelector(".listado-pendientes ul").innerHTML =
+          "<p class='lista-vacia'>No hay Eventos en este proyecto</p>";
+      }
+    }
+  };
+  // enviar la petición
+  xhr.send(datos);
+}
+
+// Acciones en los Invitados
+
+function accionesInvitados(e) {
+  console.log("elimina invitados");
 
   e.preventDefault();
 
@@ -243,17 +311,18 @@ function accionesTareas(e) {
 function eliminarEventoBD(evento) {
   var idEvento = evento.id.split(":");
 
+
   // crear llamado ajax
   var xhr = new XMLHttpRequest();
   console.log(idEvento);
 
   // informacion
   var datos = new FormData();
-  datos.append("id", idEvento[1]);
+  datos.append("invitado_id", idEvento[1]);
   datos.append("accion", "eliminar");
 
   // abrir la conexion
-  xhr.open("POST", "includes/modelos/modelo-tareas.php", true);
+  xhr.open("POST", "includes/modelos/modelo-invitado.php",true);
 
   // on load
   xhr.onload = function () {

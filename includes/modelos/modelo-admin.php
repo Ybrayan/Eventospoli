@@ -35,9 +35,11 @@ if($accion === 'crear') {
         $conn->close();
     } catch(Exception $e) {
         // En caso de un error, tomar la exepcion
+        /*
         $respuesta = array(
             'error' => $e->getMessage()
         );
+        */
     }
     
     echo json_encode($respuesta);
@@ -86,9 +88,11 @@ if($accion === 'login') {
         $conn->close();
     } catch(Exception $e) {
         // En caso de un error, tomar la exepcion
+        /*
         $respuesta = array(
-            'pass' => $e->getMessage()
+            'error' => $e->getMessage()
         );
+        */
     }
     
     echo json_encode($respuesta);
