@@ -7,9 +7,9 @@ function eventListeners() {
   var nombre = document.getElementById("nombre-evento");
 
   // Validacion de capacidad de campos
-  nombre.addEventListener("input", function () {
+  /*nombre.addEventListener("input", function () {
     if (this.value.length > 30) this.value = this.value.slice(0, 30);
-  });
+  });*/
 
   if (document.querySelector(".nuevo-evento") !== null) {
     document
@@ -21,8 +21,8 @@ function eventListeners() {
     document
       .querySelector(".nuevo-invitado")
       .addEventListener("click", agregarInvitado);
-    console.log("eee");
   }
+
 
   // Botones para las acciones de las tareas
   document
@@ -51,7 +51,6 @@ function solo_texto(inputtxt) {
 
 // Agregar invitado
 function agregarInvitado(e) {
-  console.log("entro");
   e.preventDefault();
 
   var nombre = document.querySelector(".nombre-invitado").value;
@@ -59,6 +58,7 @@ function agregarInvitado(e) {
   var descripcion =
     "Praesent massa ipsum, porta ut aliquam ac, pretium eget felis. Praesent eleifend dolor eget sollicitudin pellentesque. Fusce arcu enim, molestie id accumsan a, fringilla a magna. Nullam consequat congue felis, nec convallis dui congue et. Nulla efficitur bibendum metus a fermentum. Sed id bibendum massa. Quisque purus magna, mattis a hendrerit a, pretium et ex. Mauris quis ex at arcu dictum fringilla at nec purus. Nam non facilisis risus, eu luctus neque. Vivamus id placerat nibh, vitae pellentesque ante. Vestibulum malesuada nisl consequat, gravida nisl ut, iaculis ipsum. Vestibulum suscipit, dui in aliquet tempus, felis risus sagittis ex, vitae porta arcu purus eu neque. Cras posuere augue neque, quis laoreet leo vulputate a. Pellentesque aliquam ex vitae augue laoreet viverra. Nullam volutpat elit non diam gravida vulputate. Mauris ornare feugiat leo eget tristique.";
   var url_imagen = "invitado.jpg";
+  
 
   // Validar que el campo tenga algo escrito
 

@@ -11,15 +11,15 @@
 
     <h1>Registro del nuevo Invitado</h1>
 
-    <form action="" class="agregar-invitado" method="post">
+    <form action="#" class="agregar-invitado" method="POST">
         <div class="campo">
             <label for="nombre">Nombre:</label>
-            <input type="text" required placeholder="Nombre del Invitado" name="nombre-invitado" id="nombre-invitado" class="nombre-invitado" maxlength="20"
-                pattern="[A-Za-z]{1,20}" />
+            <input type="text" required placeholder="Nombre del Invitado" name="nombre-invitado" id="nombre-invitado" class="nombre-invitado" 
+            maxlength="20" pattern="[A-Za-z]{1,20}" />
         </div>
 
         <div class="campo">
-            <label for="apellido">Invitado:</label>
+            <label for="apellido">Apellido:</label>
             <input type="text" required placeholder="Apellido del Invitado" name="apellido-invitado" id="apellido-invitado" class="apellido-invitado"
                 maxlength="20" pattern="[A-Za-z]{1,20}" />
         </div>

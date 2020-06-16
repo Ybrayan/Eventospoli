@@ -72,7 +72,8 @@
       }
 
       function validaremail() {
-        if (this.value.indexOf("@") > -1) {
+        //if (this.value.indexOf("@") > -1) {
+        if (Reg_Email(this.value)) {
           errordiv.style.display = "none";
           this.style.border = "1px solid #cccccc";
         } else {
@@ -85,15 +86,15 @@
 
       function calcularmontos(event) {
         event.preventDefault();
-        if (nombre.value == "" || apellido.value == "" || email.value == "") {
+        if (nombre.value === "" || apellido.value === "" || email.value === "") {
           alert("Debes ingresar tu nombre, apellido y correo");
           if (nombre.value === "") {
             nombre.focus();
           }
-          if (nombre.value === "") {
+          if (apellido.value === "") {
             apellido.focus();
           }
-          if (nombre.value === "") {
+          if (email.value === "") {
             email.focus();
           }
         } else {
@@ -189,7 +190,7 @@
 
 // Expresiones Regulares
 // Usuarion
-function solo_texto(inputtxt) {
+function Reg_texto(inputtxt) {
   var patt = new RegExp(/^[A-Za-z _]*[A-Za-z][A-Za-z _]*$/);
   var res = patt.test(inputtxt);
   if (res) {
@@ -202,7 +203,7 @@ function solo_texto(inputtxt) {
   }
 }
 // Email
-function solo_texto(inputtxt) {
+function Reg_Email(inputtxt) {
   var patt = new RegExp(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/);
   var res = patt.test(inputtxt);
   if (res) {
@@ -278,13 +279,14 @@ $(function () {
   });
 
   //validar campos email
-  $(".email").keydown(function (event) {
+  /*$(".email").keydown(function (event) {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3,4})+$/.test(event.keyCode)) {
       alert("La dirección de email " + valor + " es correcta.");
     } else {
       alert("La dirección de email es incorrecta.");
     }
   });
+  */
 
   //validar campos testo
   $(".solo_texto").keydown(function (event) {
