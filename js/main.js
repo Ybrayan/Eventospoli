@@ -56,7 +56,7 @@
 
       nombre.addEventListener("blur", validarcampos);
       apellido.addEventListener("blur", validarcampos);
-      email.addEventListener("blur", validarcampos);
+      //      email.addEventListener("blur", validarcampos);
       email.addEventListener("blur", validaremail);
 
       function validarcampos() {
@@ -66,21 +66,34 @@
           this.style.border = "2px solid red";
           errordiv.style.border = "2px solid red";
         } else {
-          errordiv.style.display = "none";
-          this.style.border = "1px solid #cccccc";
+          if (Reg_texto(this.value)) {
+            errordiv.style.display = "none";
+            this.style.border = "1px solid #cccccc";
+          } else {
+            errordiv.style.display = "block";
+            errordiv.innerHTML = "Los Nombre y/o Apellidos no deben tener caracteres especiales";
+            this.style.border = "2px solid red";
+            errordiv.style.border = "2px solid red";
+          }
         }
       }
 
       function validaremail() {
-        //if (this.value.indexOf("@") > -1) {
-        if (Reg_Email(this.value)) {
-          errordiv.style.display = "none";
-          this.style.border = "1px solid #cccccc";
-        } else {
+        if (this.value == "") {
           errordiv.style.display = "block";
-          errordiv.innerHTML = "Debe tener almenos un @";
+          errordiv.innerHTML = "Este campo es obligatorio";
           this.style.border = "2px solid red";
           errordiv.style.border = "2px solid red";
+        } else {
+          if (Reg_Email(this.value)) {
+            errordiv.style.display = "none";
+            this.style.border = "1px solid #cccccc";
+          } else {
+            errordiv.style.display = "block";
+            errordiv.innerHTML = "El Correo esta mal redactado";
+            this.style.border = "2px solid red";
+            errordiv.style.border = "2px solid red";
+          }
         }
       }
 
@@ -198,7 +211,6 @@ function Reg_texto(inputtxt) {
     return true;
   } else {
     console.log("Fallo Regex");
-    alert("message");
     return false;
   }
 }
@@ -211,7 +223,6 @@ function Reg_Email(inputtxt) {
     return true;
   } else {
     console.log("Fallo Regex Email");
-    alert("message");
     return false;
   }
 }
@@ -271,7 +282,7 @@ $(function () {
   $(".resumen-evento li:nth-child(4) p").animateNumber({ number: 9 }, 1500);
 
   //Cuenta regresiva
-  $(".cuenta-regresiva").countdown("2021/5/1 1:00:00", function (event) {
+  $(".cuenta-regresiva").countdown("2020/7/6 1:00:00", function (event) {
     $("#dias").html(event.strftime("%D"));
     $("#horas").html(event.strftime("%H"));
     $("#minutos").html(event.strftime("%M"));

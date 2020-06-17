@@ -7,15 +7,18 @@
             <div id="datos_usuario" class="registro caja clearfix">
                 <div class="campo">
                     <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Tu Nombre" maxlength="15" class="solo_texto">
+                    <input type="text" id="nombre" name="nombre" placeholder="Tu Nombre" maxlength="15" class="solo_texto"
+                        pattern="[A-Za-z0-9]{1,30}" required>
                 </div>
                 <div class="campo">
                     <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" placeholder="Tu Apellido" maxlength="10" class="solo_texto">
+                    <input type="text" id="apellido" name="apellido" placeholder="Tu Apellido" maxlength="10" class="solo_texto"
+                        pattern="[A-Za-z0-9]{1,30}" required>
                 </div>
                 <div class="campo">
                     <label for="email">Email</label>
-                    <input type="text" id="email" name="email" placeholder="Tu Email" maxlength="20" class="email">
+                    <input type="text" id="email" name="email" placeholder="Tu Email" maxlength="20" class="email"
+                        required>
                 </div>
                 <div id="error"></div>
             </div>

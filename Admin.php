@@ -10,6 +10,8 @@
     }
 ?>
 
+
+
 <div class="contenedor">
     <?php
         include 'includes/templates/sidebar.php';
